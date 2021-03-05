@@ -1,6 +1,7 @@
 from selenium import webdriver
-import win10toast
+import win10toast_click as win10toast
 import PySimpleGUI as sg
+import webbrowser
 
 def obtenerBotonDisponible(url):
     opciones = webdriver.ChromeOptions()
@@ -13,10 +14,15 @@ def obtenerBotonDisponible(url):
 
 def mostrarCartel(disponible):
     Toaster=win10toast.ToastNotifier()
+    icono_si="C:/Selenium/yes.ico"
+    icono_no="C:/Selenium/no.ico"
     if disponible:
-        Toaster.show_toast(title="¡Disponible!",msg="Los Motorola Pulse 120 ya están en stock en Carrefour!!!!!")
+        Toaster.show_toast(title="¡Disponible!",msg="Los Motorola Pulse 120 ya están en stock en Carrefour!!!!!",duration=120,icon_path=icono_si,callback_on_click=abrirUrl)
     else:
-        Toaster.show_toast(title="Los auriculares aún no están en stock.",msg="Los Motorola Pulse 120 aún no están en stock en Carrefour.")
+        Toaster.show_toast(title="Los auriculares aún no están en stock.",msg="Los Motorola Pulse 120 aún no están en stock en Carrefour.",icon_path=icono_no,callback_on_click=abrirUrl)
+
+def abrirUrl():
+    webbrowser.open("https://www.carrefour.com.ar/elegi-el-regalo-ideal/auriculares-motorola-over-ear-pulse-120-negro.html")
 
 def __main__():
     url="https://www.carrefour.com.ar/elegi-el-regalo-ideal/auriculares-motorola-over-ear-pulse-120-negro.html"
